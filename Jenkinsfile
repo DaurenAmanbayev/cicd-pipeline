@@ -2,9 +2,13 @@ pipeline {
     agent {
         docker { 
             image 'library/node:20-bullseye-slim'
+            args '-u root:root' 
         }
     }
-  
+    
+    environment {
+        npm_config_cache = "${env.WORKSPACE}/.npm-cache"
+    }
   stages {
     stage('Git Checkout') {
       steps {
