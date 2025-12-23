@@ -1,5 +1,11 @@
 pipeline {
   agent any
+  
+  tools {
+        nodejs 'node25' 
+  }
+  
+  
   stages {
     stage('Git Checkout') {
       steps {
@@ -14,6 +20,8 @@ pipeline {
 
     stage('Application Build') {
       steps {
+        sh 'node -v'
+        sh 'npm -v'
         sh 'chmod +x scripts/build.sh'
         sh './scripts/build.sh'
       }
