@@ -14,6 +14,7 @@ pipeline {
 
     stage('Application Build') {
       steps {
+        sh 'chmod +x scripts/build.sh'
         sh './scripts/build.sh'
       }
     }
@@ -29,17 +30,18 @@ pipeline {
         sh 'docker build -t discanedocker/cicd-pipeline:latest .'
       }
     }
-	
-	stage('Docker Image Push') {
-            steps {
-                script {                     
-                    docker.withRegistry('') {
-                        def img = docker.build("discanedocker/cicd-pipeline:latest")
-                        img.push()
-                    }
-                }
-            }
+
+    stage('Docker Image Push') {
+      steps {
+        script {
+          docker.withRegistry('') {
+            def img = docker.build("discanedocker/cicd-pipeline:latest")
+            img.push()
+          }
         }
+
+      }
+    }
 
   }
 }
