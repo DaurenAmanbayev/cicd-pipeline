@@ -29,6 +29,17 @@ pipeline {
         sh 'docker build -t discanedocker/cicd-pipeline:latest .'
       }
     }
+	
+	stage('Docker Image Push') {
+            steps {
+                script {                     
+                    docker.withRegistry('') {
+                        def img = docker.build("discanedocker/cicd-pipeline:latest")
+                        img.push()
+                    }
+                }
+            }
+        }
 
   }
 }
