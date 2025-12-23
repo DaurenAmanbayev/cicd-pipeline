@@ -50,7 +50,8 @@ pipeline {
 	   agent { label 'docker' }
        steps {
         script {
-          docker.withRegistry('') {
+		  sh 'docker logout || true'
+          docker.withRegistry('', 'dockerhub-creds') {
             sh 'docker push discanedocker/cicd-pipeline:latest'
           }
         }
