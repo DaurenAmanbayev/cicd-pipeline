@@ -1,10 +1,9 @@
 pipeline {
-  agent any
-  
-  tools {
-        nodejs 'node25' 
-  }
-  
+    agent {
+        docker { 
+            image 'node:20-bullseye-slim'
+        }
+    }
   
   stages {
     stage('Git Checkout') {
