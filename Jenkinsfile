@@ -9,16 +9,12 @@ pipeline {
 	    agent {
         docker { 
             image 'library/node:20-bullseye-slim'
-            args '-u root:root' 
+            args '-u $(id -u):$(id -g)'
             }
         }
         steps {
-        sh '''    echo "Repository checked out successfully"
-        echo "Current branch: $(git branch --show-current || echo \'detached HEAD\')"
-        echo "Commit: $(git rev-parse --short HEAD)"
-        echo ""
-        echo "Project structure:"
-        ls -la'''
+        sh '''echo "Repository checked out successfully"
+        echo "Current branch: $(git branch --show-current || echo \'detached HEAD\')"'''
       }
     }
 
@@ -26,7 +22,7 @@ pipeline {
 		agent {
         docker { 
             image 'library/node:20-bullseye-slim'
-            args '-u root:root' 
+            args '-u $(id -u):$(id -g)' 
             }
         }
         steps {
@@ -41,7 +37,7 @@ pipeline {
 	    agent {
         docker { 
             image 'library/node:20-bullseye-slim'
-            args '-u root:root' 
+            args '-u $(id -u):$(id -g)'
             }
         }
         steps {
@@ -67,6 +63,14 @@ pipeline {
 
       }
     }
-
   }
+  post {
+        always {
+            script {
+                node('docker') { 
+                    sh 'rm -rf node_modules .npm-cache'
+                }
+            }
+        }
+    }
 }
