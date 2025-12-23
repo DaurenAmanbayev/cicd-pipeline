@@ -34,6 +34,7 @@ pipeline {
             }
         }
         steps {
+		sh 'npm install'
         sh './scripts/test.sh'
       }
     }
