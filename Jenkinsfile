@@ -17,7 +17,6 @@ pipeline {
 		agent {
         docker { 
             image 'library/node:20-bullseye-slim'
-            args '-u $(id -u):$(id -g)' 
             }
         }
         steps {
@@ -32,7 +31,6 @@ pipeline {
 	    agent {
         docker { 
             image 'library/node:20-bullseye-slim'
-            args '-u $(id -u):$(id -g)'
             }
         }
         steps {
