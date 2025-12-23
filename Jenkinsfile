@@ -6,12 +6,7 @@ pipeline {
     }
   stages {
     stage('Git Checkout') {
-	    agent {
-        docker { 
-            image 'library/node:20-bullseye-slim'
-            args '-u $(id -u):$(id -g)'
-            }
-        }
+	    agent { label 'docker' }
         steps {
         sh '''echo "Repository checked out successfully"
         echo "Current branch: $(git branch --show-current || echo \'detached HEAD\')"'''
